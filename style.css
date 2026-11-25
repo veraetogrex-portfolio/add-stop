@@ -1,0 +1,150 @@
+/* VECTOR Maps · add a stop — zero dependencies. The whole 1440×900 app screen. */
+.vm{
+  --vm-bg:#07080C; --vm-side:#0B0C11; --vm-panel:#0E1016; --vm-well:#10121A; --vm-row:#12141B; --vm-tab:#1C202A;
+  --vm-line:#191B23; --vm-line-2:#1E2029; --vm-line-3:#262935; --vm-line-4:#1B1E27;
+  --vm-text:#EDEAE3; --vm-text-2:#C9CBD4; --vm-nav:#B9BBC6; --vm-muted:#9A9CA8; --vm-dim:#858896;
+  --vm-route:#2CC7B5; --vm-route-soft:#86E3D6; --vm-route-bg:#0F2422; --vm-route-line:#1E4A45; --vm-on-route:#04201C;
+  --vm-amber:#E3A857; --vm-map:#0C1016;
+  --vm-out:cubic-bezier(.23,1,.32,1); --vm-move:cubic-bezier(.65,0,.35,1);
+  position:relative; width:1440px; height:900px; overflow:hidden; display:flex;
+  background:var(--vm-bg); color:var(--vm-text); font-family:var(--font, Geist, system-ui, sans-serif);
+  font-size:14px; line-height:1.35; -webkit-font-smoothing:antialiased;
+}
+.vm :where(*, *::before, *::after){box-sizing:border-box}
+.vm :where(h1, h2, p){margin:0; padding:0}
+.vm :where(button){font:inherit; color:inherit; cursor:pointer; background:none; border:0; padding:0}
+.vm :where(a){color:inherit; text-decoration:none}
+.vm :where(img){display:block; max-width:none; object-fit:cover; background:#1A1C24}
+.vm :where(button, a, input):focus-visible{outline:2px solid var(--vm-route); outline-offset:2px}
+.vm .vm-sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+.vm .vm-num{font-variant-numeric:tabular-nums}
+.vm .vm-av{border-radius:50%; flex:none; width:34px; height:34px}
+
+/* sidebar */
+.vm .vm-side{width:216px; flex:none; background:var(--vm-side); border-right:1px solid var(--vm-line); display:flex; flex-direction:column; gap:4px; padding:22px 12px 18px}
+.vm .vm-logo{display:flex; align-items:center; gap:10px; padding:0 10px 22px; font-size:16px}
+.vm .vm-logo b{font-weight:700; letter-spacing:.02em}
+.vm .vm-logo span{color:var(--vm-muted)}
+.vm .vm-nav{display:flex; align-items:center; gap:12px; height:38px; padding:0 10px; border-radius:8px; color:var(--vm-nav); font-weight:500; transition:color .15s}
+.vm .vm-nav:hover{color:var(--vm-text)}
+.vm .vm-nav.is-on{background:var(--vm-route-bg); color:var(--vm-text)}
+.vm .vm-nav.is-on svg{color:var(--vm-route)}
+.vm .vm-nav.place{height:44px}
+.vm .vm-nav small{display:block; font-size:12px; color:var(--vm-muted); font-weight:400}
+.vm .vm-cap{margin:22px 10px 8px; font-size:12.5px; color:var(--vm-muted)}
+.vm .vm-side-foot{margin-top:auto; display:flex; flex-direction:column; gap:14px}
+.vm .vm-week{padding:14px; border-radius:12px; background:#0F1117; border:1px solid var(--vm-line-4)}
+.vm .vm-bar{height:4px; border-radius:2px; background:#22252F; margin-top:10px; display:flex; overflow:hidden}
+.vm .vm-bar span{background:var(--vm-route)}
+.vm .vm-me{display:flex; align-items:center; gap:10px; padding:0 4px}
+
+/* top bar */
+.vm .vm-col{flex:1; min-width:0; display:flex; flex-direction:column}
+.vm .vm-top{height:64px; flex:none; display:flex; align-items:center; gap:14px; padding:0 24px; border-bottom:1px solid var(--vm-line)}
+.vm .vm-search{flex:1; max-width:440px; height:40px; border-radius:10px; background:var(--vm-well); border:1px solid var(--vm-line-2); display:flex; align-items:center; gap:10px; padding:0 14px; color:var(--vm-dim); font-size:13.5px}
+.vm .vm-search input{flex:1; border:0; background:transparent; color:var(--vm-text); font:inherit; outline:none}
+.vm .vm-search input::placeholder{color:var(--vm-dim)}
+.vm .vm-top-r{margin-left:auto; display:flex; align-items:center; gap:8px}
+.vm .vm-ghost{height:38px; padding:0 16px; border-radius:10px; border:1px solid var(--vm-line-3); font-size:13.5px; font-weight:500; display:flex; align-items:center; gap:8px}
+.vm .vm-ib{width:36px; height:36px; border-radius:50%; color:var(--vm-nav); display:inline-grid; place-items:center; position:relative}
+.vm .vm-ib i{position:absolute; top:6px; right:7px; width:7px; height:7px; border-radius:50%; background:var(--vm-route)}
+
+/* directions panel */
+.vm .vm-body{flex:1; min-height:0; display:flex}
+.vm .vm-dir{width:392px; flex:none; border-right:1px solid var(--vm-line); background:var(--vm-side); padding:18px 20px; display:flex; flex-direction:column; gap:14px}
+.vm .vm-dir-h{display:flex; align-items:baseline; justify-content:space-between}
+.vm .vm-dir-h h1{font-size:19px; font-weight:600; letter-spacing:-.01em}
+.vm .vm-small{font-size:12.5px; color:var(--vm-muted)}
+.vm .vm-stops{display:flex; flex-direction:column; gap:6px}
+.vm .vm-stop{display:flex; align-items:center; gap:12px; height:42px; padding:0 12px; border-radius:10px; background:var(--vm-row); font-size:13.5px}
+.vm .vm-stop > span:nth-child(2){flex:1}
+.vm .vm-stop > span:last-child{font-size:12px; color:var(--vm-muted)}
+.vm .vm-stop.is-new{height:40px; background:var(--vm-route-bg); border:1px solid var(--vm-route-line)}
+.vm .vm-stop.is-new > span:nth-child(2){font-weight:600}
+.vm .vm-stop.is-new > span:last-child{color:var(--vm-route-soft)}
+.vm .vm-dot{width:24px; height:24px; border-radius:50%; flex:none; display:grid; place-items:center; font-size:11.5px; font-weight:700; background:var(--vm-route); color:var(--vm-on-route)}
+.vm .vm-dot.a{background:var(--vm-text); color:var(--vm-side)}
+.vm .vm-dot.mute{background:#1A1D26; color:var(--vm-text-2)}
+.vm .vm-addstop{height:34px; border:1px dashed #2A2D39; border-radius:10px; color:var(--vm-muted); font-size:13px; font-weight:500; display:flex; align-items:center; justify-content:center; gap:6px}
+.vm .vm-modes{display:flex; gap:4px; padding:4px; border-radius:12px; background:var(--vm-row); border:1px solid var(--vm-line-2)}
+.vm .vm-mode{flex:1; height:36px; border-radius:9px; color:var(--vm-nav); font-size:12.5px; font-weight:500; display:flex; align-items:center; justify-content:center; gap:6px; font-variant-numeric:tabular-nums}
+.vm .vm-mode[aria-selected="true"]{background:var(--vm-tab); color:var(--vm-text)}
+.vm .vm-mode[aria-selected="true"] svg{color:var(--vm-route)}
+.vm .vm-card{background:var(--vm-panel); border:1px solid var(--vm-line-4); border-radius:14px}
+.vm .vm-route{padding:14px 16px; display:flex; flex-direction:column; gap:10px; border-color:var(--vm-route-line)}
+.vm .vm-route-h{display:flex; align-items:baseline; gap:10px}
+.vm .vm-route-h big{font-size:22px; font-weight:600}
+.vm .vm-plus{font-size:12.5px; font-weight:600; color:var(--vm-route-soft)}
+.vm .vm-arrive{margin-left:auto; font-size:13px; color:var(--vm-text-2)}
+.vm .vm-arrive b{font-weight:600; color:var(--vm-text)}
+.vm .vm-traffic{display:flex; gap:3px; height:5px}
+.vm .vm-traffic span{border-radius:3px; background:var(--vm-route)}
+.vm .vm-ok{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--vm-text-2)}
+.vm .vm-res{display:flex; align-items:center; gap:12px; padding:8px 10px; border-radius:12px; border:1px solid var(--vm-line-4); transition:border-color .3s, background-color .3s}
+.vm .vm-res img{width:48px; height:48px; border-radius:9px}
+.vm .vm-res-t{font-size:14px; font-weight:600}
+.vm .vm-res-m{font-size:12.5px; color:var(--vm-muted); margin-top:3px; white-space:nowrap}
+.vm .vm-sec-h{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px}
+.vm .vm-sec-h h2{font-size:15px; font-weight:600}
+.vm .vm-chips{display:flex; gap:8px}
+.vm .vm-chip{height:32px; padding:0 11px; border-radius:16px; border:1px solid var(--vm-line-3); color:var(--vm-text-2); font-size:13px; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:border-color .15s, background-color .15s, color .15s, transform .12s}
+.vm .vm-chip:active, .vm .vm-btn:active{transform:scale(.97)}
+.vm .vm-chip[aria-pressed="true"]{border-color:var(--vm-route); background:var(--vm-route-bg); color:var(--vm-text)}
+.vm .vm-recent{display:flex; flex-direction:column; gap:8px}
+.vm .vm-recent-i{display:flex; align-items:center; gap:12px; font-size:13.5px}
+.vm .vm-recent-i .vm-dot{width:30px; height:30px}
+.vm .vm-recent-i > span:nth-child(2){flex:1}
+.vm .vm-shops{display:flex; flex-direction:column; gap:8px}
+.vm .vm-shop-petal{border-color:var(--vm-route-line)}
+.vm[data-added="true"] .vm-shop-petal{border-color:var(--vm-route); background:var(--vm-route-bg)}
+.vm .vm-btn{height:34px; padding:0 14px; border-radius:9px; font-size:13px; font-weight:600; flex:none; transition:transform .12s}
+.vm .vm-btn.fill{background:var(--vm-route); color:var(--vm-on-route)}
+.vm .vm-btn.line{border:1px solid #2A2D39; color:var(--vm-text-2)}
+.vm .vm-add{position:relative; display:grid; padding:0}
+.vm .vm-add > *{grid-area:1/1; display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:opacity .2s, transform .3s cubic-bezier(.2,0,0,1), filter .3s}
+.vm .vm-add-done{padding:0 12px; border-radius:9px; border:1px solid var(--vm-route); color:var(--vm-text); background:var(--vm-route-bg); opacity:0; transform:scale(.6); filter:blur(4px)}
+.vm .vm-add-idle{padding:0 14px; border-radius:9px; background:var(--vm-route); color:var(--vm-on-route)}
+.vm[data-added="true"] .vm-add-idle{opacity:0; transform:scale(.6)}
+.vm[data-added="true"] .vm-add-done{opacity:1; transform:none; filter:none}
+.vm .vm-go{margin-top:auto; height:46px; border-radius:12px; background:var(--vm-tab); color:var(--vm-text); font-size:15px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:8px; font-variant-numeric:tabular-nums; transition:background-color .35s .5s, color .35s .5s}
+.vm[data-added="true"] .vm-go{background:var(--vm-route); color:var(--vm-on-route)}
+
+/* the panel shows one of two lists: recent stops before Flowers, the shops after it */
+.vm[data-pick="true"] [data-when="start"], .vm:not([data-pick="true"]) [data-when="pick"],
+.vm:not([data-added="true"]) [data-when="added"]{display:none}
+
+/* map */
+.vm .vm-map{flex:1; min-width:0; position:relative; overflow:hidden; background:var(--vm-map)}
+.vm .vm-map > svg{position:absolute; left:0; top:0; display:block}
+.vm .vm-old{transition:opacity .35s .5s}   /* the old way fades once the new line is past the river */
+.vm[data-added="true"] .vm-old{opacity:0}
+.vm .vm-ghost{opacity:0; transition:opacity .45s .3s}
+.vm[data-added="true"] .vm-ghost{opacity:.7}
+.vm .vm-preview{opacity:0; transition:opacity .2s}
+.vm[data-pick="true"] .vm-preview{opacity:.85}
+.vm[data-added="true"] .vm-preview{opacity:0; transition:opacity .25s .75s}
+.vm .vm-new{opacity:0}
+.vm[data-added="true"] .vm-new{opacity:1}
+.vm .vm-lab{position:absolute; white-space:nowrap; font-size:12px; font-weight:600; padding:0 9px; height:24px; border-radius:12px; background:rgba(10,12,17,.92); border:1px solid var(--vm-line-3); display:flex; align-items:center; gap:6px; font-variant-numeric:tabular-nums}
+.vm .vm-mc{position:absolute; border-radius:12px; background:var(--vm-panel); border:1px solid #20232D}
+.vm .vm-pin{position:absolute; width:28px; height:28px; border-radius:50%; display:grid; place-items:center}
+/* pins and labels that belong to one state fade in and out with it */
+.vm .vm-on-pick, .vm .vm-on-added{opacity:0; visibility:hidden; transition:opacity .25s, transform .35s var(--vm-out), visibility 0s .35s}
+.vm .vm-on-pick{transform:translateY(6px) scale(.92)}
+.vm[data-pick="true"]:not([data-added="true"]) .vm-on-pick{opacity:1; visibility:visible; transform:none; transition:opacity .3s var(--d, 0s), transform .4s var(--vm-out) var(--d, 0s)}
+.vm[data-added="true"] .vm-on-added{opacity:1; visibility:visible; transition:opacity .3s var(--d, 0s)}
+/* Petal & Twine: the same pin becomes stop 1 */
+.vm .vm-petal{position:absolute; left:452px; top:530px; width:34px; height:34px; border-radius:50%; background:var(--vm-route); color:var(--vm-on-route); display:grid; place-items:center; box-shadow:0 0 0 3px var(--vm-map), 0 0 0 7px rgba(44,199,181,.25); transition:opacity .25s, transform .4s var(--vm-out), box-shadow .3s .3s}
+.vm .vm-petal > *{grid-area:1/1; transition:opacity .2s .3s, transform .3s cubic-bezier(.2,0,0,1) .3s, filter .3s .3s}
+.vm .vm-petal b{font-size:15px; font-weight:700; opacity:0; transform:scale(.25); filter:blur(4px)}
+.vm:not([data-pick="true"]) .vm-petal{opacity:0; transform:scale(.6)}
+.vm[data-added="true"] .vm-petal{box-shadow:0 0 0 3px var(--vm-map), 0 0 0 7px rgba(44,199,181,0)}
+.vm[data-added="true"] .vm-petal svg{opacity:0; transform:scale(.25); filter:blur(4px)}
+.vm[data-added="true"] .vm-petal b{opacity:1; transform:none; filter:none}
+.vm .vm-shares{transition:color .3s .55s}
+.vm[data-added="true"] .vm-shares{color:var(--vm-route-soft)}
+
+.vm.is-instant *, .vm.is-instant{transition:none !important}
+@media (prefers-reduced-motion: reduce){
+  .vm *{transition-duration:.01s !important; transition-delay:0s !important}
+}
